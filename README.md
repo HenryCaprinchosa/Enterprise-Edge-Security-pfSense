@@ -4,9 +4,10 @@
 ![pfSense](https://img.shields.io/badge/pfSense-Firewall-red)
 ![Network Security](https://img.shields.io/badge/Security-Zero%20Trust-blue)
 ![EVE-NG](https://img.shields.io/badge/Lab-EVE--NG-green)
-![Status](https://img.shields.io/badge/Status-Completed-success)
+![Status](https://img.shields.io/badge/Status-Work%20in%20Progress-orange)
 
 ## 📌 About the Project
+🚧 Work in Progress: The core architecture and topology are uploaded. I am currently in the process of adding the pfSense XML configuration files and proof-of-concept screenshots (Suricata IDS logs and CARP failover PCAPs).
 This repository contains the documentation and configuration of an engineering network project aimed at securing an e-commerce infrastructure and **eliminating the Single Point of Failure (SPOF)**. 
 
 The project demonstrates a practical implementation of **Zero Trust** and **Defense in Depth** policies using Open Source solutions, building an environment with stringent High Availability requirements typical of Enterprise-class infrastructures.
