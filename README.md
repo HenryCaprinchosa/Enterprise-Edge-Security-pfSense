@@ -12,7 +12,7 @@ This repository contains the documentation and configuration of an engineering n
 The project demonstrates a practical implementation of **Zero Trust** and **Defense in Depth** policies using Open Source solutions, building an environment with stringent High Availability requirements typical of Enterprise-class infrastructures.
 
 **Author:** Natan Zawadzki  
-**Project developed as part of a B.Sc. Engineering Thesis (2025).**
+**Project developed as part of a B.Sc. Engineering Thesis (2026).**
 
 ---
 
@@ -20,7 +20,6 @@ The project demonstrates a practical implementation of **Zero Trust** and **Defe
 The environment was designed and deployed in the **EVE-NG** network emulator (based on the KVM hypervisor). 
 
 ![Network Topology Diagram](topology.png)
-*(Note: Upload a file named topology.png to your repository for this image to display)*
 
 ---
 
@@ -60,12 +59,10 @@ The environment was designed and deployed in the **EVE-NG** network emulator (ba
 ### Failover Test
 The MAC address change in the packet capture indicates the immediate takeover of the VIP address by the standby firewall node without interrupting communication.
 ![CARP Failover Proof](failover.png)
-*(Note: Upload a file named failover.png)*
 
 ### Intruder Blocking (Suricata)
 The system automatically detects and drops packets during an aggressive network scanning attempt using Nmap.
 ![Suricata IDS/IPS Proof](suricata.png)
-*(Note: Upload a file named suricata.png)*
 
 ---
 
