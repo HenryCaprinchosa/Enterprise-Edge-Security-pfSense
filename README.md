@@ -1,10 +1,10 @@
-# Enterprise-Edge-Security-pfSense
-# 🛡️ High Availability E-commerce Network Defense (pfSense HA Cluster)
+# High Availability E-commerce Network Defense 🛡️
 
-![pfSense](https://img.shields.io/badge/pfSense-Firewall-red)
-![Network Security](https://img.shields.io/badge/Security-Zero%20Trust-blue)
-![EVE-NG](https://img.shields.io/badge/Lab-EVE--NG-green)
-![Status](https://img.shields.io/badge/Status-Work%20in%20Progress-orange)
+![pfSense]([https://img.shields.io/badge/pfSense-Firewall-red](https://img.shields.io/badge/pfSense-Firewall-red?style=flat-square&logo=pfsense))
+![Suricata]([https://img.shields.io/badge/Security-Zero%20Trust-blue](https://img.shields.io/badge/Suricata-IPS-orange?style=flat-square))
+![OpenVPNG]([https://img.shields.io/badge/Lab-EVE--NG-green](https://img.shields.io/badge/OpenVPN-Secure_Access-blue?style=flat-square&logo=openvpn))
+![EVE-NG](https://img.shields.io/badge/EVE--NG-Network_Emulation-lightgrey?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Done-green)
 
 ## 📌 About the Project
 🚧 Work in Progress: The core architecture and topology are uploaded. I am currently in the process of adding the pfSense XML configuration files and proof-of-concept screenshots (Suricata IDS logs and CARP failover PCAPs).
