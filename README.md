@@ -122,7 +122,7 @@ You must upload the corresponding '.qcow2' image files into the following exact 
 
 *Note: Due to licensing, I cannot provide the OS image files in this repository. You must obtain them from their respective vendors.*
 
-Once all images are uploaded, open the EVE-NG CLI and run the fix premissions command. **Do not skip this step:**'
+Once all images are uploaded, open the EVE-NG CLI and run the fix premissions command. **Do not skip this step:**
 ```bash
 /opt/unetlab/wrappers/unl_wrapper -a fixpermissions
 ```
