@@ -6,23 +6,19 @@
 ![EVE-NG](https://img.shields.io/badge/EVE--NG-Network_Emulation-lightgrey?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-Done-green)
 
-## 📌 About the Project
-🚧 Work in Progress: The core architecture and topology are uploaded. I am currently in the process of adding the pfSense XML configuration files and proof-of-concept screenshots (Suricata IDS logs and CARP failover PCAPs).
-This repository contains the documentation and configuration of an engineering network project aimed at securing an e-commerce infrastructure and **eliminating the Single Point of Failure (SPOF)**. 
+In modern e-commerce, a Single Point of Failure (SPOF) at the network edge means unacceptable downtime and financial loss. This project elmininates SPOF by implementing a fully redundant, High Availability cluster and a Zero Trust network architecture using strictly open-source solutions to achive enterprise-grade security.
 
-The project demonstrates a practical implementation of **Zero Trust** and **Defense in Depth** policies using Open Source solutions, building an environment with stringent High Availability requirements typical of Enterprise-class infrastructures.
+![Network Topology](logical_topology.png)
+*> Logical topology of the designed enviroment.*
 
-**Author:** Natan Zawadzki  
-**Project developed as part of a B.Sc. Engineering Thesis (2026).**
-
----
-
-## 🏗️ Architecture & Topology
-The environment was designed and deployed in the **EVE-NG** network emulator (based on the KVM hypervisor). 
-
-![Network Topology Diagram](topology.png)
-
----
+## 🛠️ Technologies
+* **Firewall & Routing:** pfSense
+* **Network Security:** Suricata, pfBlockerNG, OpenVPN
+* **Auditing:** Wireshark, Nmap, iperf3, Netcat, Syslog
+* **Layer 2:** Cisco vIOS L2
+* **Client Systems:** Ubuntu MATE 24.04.3 LTS
+* **Server Systems:** Ubuntu Server 24.04 LTS
+* **Virtualization Environment:** EVE-NG, VMWare Workstation Pro
 
 ## ✨ Key Implemented Features
 
@@ -42,16 +38,6 @@ The environment was designed and deployed in the **EVE-NG** network emulator (ba
 ### 4. Secure Remote Access
 * Deployment of an **OpenVPN** server using strong cryptography (AES-256-GCM).
 * Certificate-based user authentication (Public Key Infrastructure - PKI).
-
----
-
-## 🛠️ Technologies Used
-* **Core System:** pfSense (FreeBSD)
-* **Virtualization Environment:** EVE-NG, QEMU/KVM
-* **Layer 2:** Cisco vIOS L2 (Switching, VLAN, STP)
-* **Client/Service Systems:** Ubuntu Server 24.04 LTS (WWW, DB)
-* **Network Security:** Suricata, pfBlockerNG, OpenVPN
-* **Auditing Tools:** Wireshark, Nmap, iperf3, Netcat
 
 ---
 
