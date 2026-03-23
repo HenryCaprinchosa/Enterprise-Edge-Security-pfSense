@@ -4,7 +4,7 @@
 ![Suricata](https://img.shields.io/badge/Suricata-IPS-orange?style=flat-square)
 ![OpenVPNG](https://img.shields.io/badge/OpenVPN-Secure_Access-blue?style=flat-square&logo=openvpn)
 ![EVE-NG](https://img.shields.io/badge/EVE--NG-Network_Emulation-lightgrey?style=flat-square)
-![Status](https://img.shields.io/badge/Status-Done-green?style=flat-square)
+![Status](https://img.shields.io/badge/Status-InProgress-orange?style=flat-square)
 
 In modern e-commerce, a Single Point of Failure (SPOF) at the network edge means unacceptable downtime and financial loss. This project elmininates SPOF by implementing a fully redundant, High Availability cluster and a Zero Trust network architecture using strictly open-source solutions to achive enterprise-grade security.
 
