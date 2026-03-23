@@ -51,7 +51,7 @@ Before booting up any virtual machines, I mapped out the business requirements. 
 ### Phase 2: EVE-NG Provisioning & Hypervisor Setup
 This project required a custom-built, hardware-emulated laboratory. After deploying the **EVE-NG** virtual machine on VMware Workstation Pro, I had to manually provision the operating systems for the nodes:
 * Established a secure connection to the EVE-NG underlying Linux environment using **WinSCP**.
-* Created custom virtual hard drives and transferred the '.iso' installation imgaes (pfSense, Ubuntu Server, Ubuntu MATE) and the '.vmdk' virtual machine disk (Cisco L2 Switch) directly into the hypervisor.
+* Created custom virtual hard drives and transferred the '.iso' installation images (pfSense, Ubuntu Server, Ubuntu MATE) and the '.vmdk' virtual machine disk (Cisco L2 Switch) directly into the hypervisor.
 * Strictly adhered to EVE-NG's EQMU node naming conventions to ensure the emulator correctly recognized and booted the custom pfSense and Linux nodes.
 
 ### Phase 3: Network Infrastructure & High Availability
@@ -115,10 +115,10 @@ To run this lab, you will need a machine with at least 16GB of RAM and a CPU sup
 EVE-NG requires specific node images to run the firewalls, switches and clients. Use na FTP/SCP client like **WinSCP** or **FileZilla** to connect to your EVE-NG VM (Credentials: 'root' / 'eve').
 
 You must upload the corresponding '.qcow2' image files into the following exact directories in '/opt/unetlab/addons/qemu/':
-* **pfSense:** 'pfsense-2.7.2/'
+* **pfSense:** 'pfsense-2.7.2/' 
 * **Cisco vIOS L2:** 'viosl2-adventerprisek9-m/'
-* **Ubuntu Server:** 'linux-ubuntu-server/'
-* **Ubuntu MATE:** 'linux-ubuntu-mate/'
+* **Ubuntu Server:** 'linux-ubuntu-server/' 
+* **Ubuntu MATE:** 'linux-ubuntu-mate/' 
 
 *Note: Due to licensing, I cannot provide the OS image files in this repository. You must obtain them from their respective vendors.*
 
@@ -126,7 +126,21 @@ Once all images are uploaded, open the EVE-NG CLI and run the fix premissions co
 ```bash
 /opt/unetlab/wrappers/unl_wrapper -a fixpermissions
 ```
-### Step 3: 
+### Step 3: Importing the Topology
+1. Open your web browser and navigate to the EVE-NG IP address (Credentials: admin/eve).
+2. Download the *Enterprise_Edge_Security_Topology.unl* file from this GitHub repository.
+3. In the EVE-NG WebGUI, click the **Import** button and upload the *.unl* file.
+4. Open the imported lab. You should now see the complete visual topology.
 
+### Step 4: Testing the Environment
+1. Right-click on the nodes and select **Start** to boot up the environment.
+2. The pfSense firewalls need their configurations. I have provided the XML backup files in the *configs/* folder of this repository.
+3. Open the console of the *Admin PC* inside EVE-NG.
+4. Open a web browser on the Admin PC and navigate to the pfSense WebGUI:
+  * **Master pfSense:** https://192.168.10.2
+  * **Backup pfSense:** https://192.168.10.3
+5. Go to **Diagnostics -> Backup & Restore** and upload the respective *pfsense_master_config.xml* and *pfsense_backup_config.xml* files. The firewalls will reboot.
+
+*If you encounter any issues reproducing this lab, feel free to open an Issue in this repository!*
 
 *This project is for educational and demonstration purposes. It was prepared as part of engineering documentation validating practical skills in network engineering and cybersecurity.*
