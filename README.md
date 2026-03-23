@@ -4,7 +4,7 @@
 ![Suricata](https://img.shields.io/badge/Suricata-IPS-orange?style=flat-square)
 ![OpenVPNG](https://img.shields.io/badge/OpenVPN-Secure_Access-blue?style=flat-square&logo=openvpn)
 ![EVE-NG](https://img.shields.io/badge/EVE--NG-Network_Emulation-lightgrey?style=flat-square)
-![Status](https://img.shields.io/badge/Status-Done-green)
+![Status](https://img.shields.io/badge/Status-Done-green?style=flat-square)
 
 In modern e-commerce, a Single Point of Failure (SPOF) at the network edge means unacceptable downtime and financial loss. This project elmininates SPOF by implementing a fully redundant, High Availability cluster and a Zero Trust network architecture using strictly open-source solutions to achive enterprise-grade security.
 
@@ -20,43 +20,60 @@ In modern e-commerce, a Single Point of Failure (SPOF) at the network edge means
 * **Server Systems:** Ubuntu Server 24.04 LTS
 * **Virtualization Environment:** EVE-NG, VMWare Workstation Pro
 
-## ✨ Key Implemented Features
+## ✨ Features
 
-### 1. High Availability Cluster (HA)
-* Utilization of the **CARP** (Common Address Redundancy Protocol) for IP address redundancy.
-* Implementation of the **pfsync** mechanism on a dedicated interface (VLAN) for continuous State Table synchronization. 
-* **Result:** In the event of a physical Master node failure (e.g., power outage), the Backup node takes over the traffic in under 3 seconds without dropping active TCP sessions.
+### 1. Active-Passive HA Cluster
+* Utilization of the **CARP** for IP address redundancy.
+* Implementation of the **pfsync** mechanism on a dedicated interface for continuous State Table synchronization. 
+* **Result:** In the event of a physical Master node failure, the Backup node takes over the traffic in under 3 seconds without dropping active TCP sessions.
 
-### 2. Network Segmentation & RBAC (Zero Trust)
-* Deployment of **VLANs (802.1Q)** to strictly isolate traffic zones (LAN, DMZ, WAN, SYNC).
-* Configuration of strict Role-Based Access Control (RBAC) firewall rules utilizing a *Default Deny* policy.
+### 2. Zero Trust Architecture
+* Deployment of **VLANs (802.1Q)** to strictly isolate traffic zones (LAN, DB, WAN).
+* Configuration of strict Role-Based Access Control firewall rules utilizing a *Default Deny* policy.
 
-### 3. Advanced Protection (IDS/IPS & Geo-blocking)
-* **Suricata (IPS):** Deep Packet Inspection (DPI) with active threat blocking (including port scanning and DoS attacks).
+### 3. Advanced Protection
+* **Suricata (IPS):** Deep Packet Inspection with active threat blocking.
 * **pfBlockerNG-devel:** Reputation-based protection and geographical traffic blocking from high-risk countries on the WAN interface.
 
 ### 4. Secure Remote Access
 * Deployment of an **OpenVPN** server using strong cryptography (AES-256-GCM).
 * Certificate-based user authentication (Public Key Infrastructure - PKI).
 
----
+### 5. Cost Efficency
+* Enterprise-level edge protection achieved without expensive proprietaty licensing.
 
-## 📊 Verification & Testing (Proof of Concept)
+## The Process
 
-### Failover Test
-The MAC address change in the packet capture indicates the immediate takeover of the VIP address by the standby firewall node without interrupting communication.
-![CARP Failover Proof](failover.png)
+## 📊 Proof of Concept / Testing
 
-### Intruder Blocking (Suricata)
-The system automatically detects and drops packets during an aggressive network scanning attempt using Nmap.
-![Suricata IDS/IPS Proof](suricata.png)
+### Test 1: Failover Test
+* **Scenario:** Simulated a sudden hardware failure of the Master pfSense node during active traffic.
+* **Result:** The Backup node successfully detected the missing CARP heartbeats and assumed the Master role. The failover occured in ~3 seconds, and thanks to 'pfsync' state replication, active TCP sessions were not dropped.
 
----
+![Failover Wireshark Test](wireshark_failover_test.png)
+![Failover Ping Test](icmp_failover_test.png)
+*> ICMP traffic dropping and recovering in ~3 seconds without breaking the session.*
 
-## 🚀 How to run this lab?
-1. Import the `.unl` (or `.zip`) topology file into your EVE-NG server.
-2. Ensure you have the `pfSense` and `vios-l2` images uploaded to the appropriate EVE-NG directories.
-3. Import the `.xml` configuration files (located in the `configs/` directory) directly into the pfSense nodes to restore the HA cluster and firewall rules.
+### Test 2: Penetration Testing vs. IPS
+* **Scenario:** An aggressive SYN port scan ('nmap -sS -Pn) was launched from an external WAN machine to map the edge network.
+* **Result:** Suricata successfully detected the scanning signatures ('ET SCAN Possible Nmap User-Agent Observed') and immediately dropped the attacker's IP at the network layer. The firewall entered Stealth Mode, returning zero information.
 
----
+![Nmap Port Scan](nmap_port_scan.png)
+*> An attempt to map the edge network*
+
+![Suricata Alerts](suricata_IPS_alert.png)
+![Suricata Blok](suricata_IPS_block.png)
+*> Automatic IP block applied by Suricata IPS in response to the scan.*
+
+## What I Learned
+* **Virtualization Nuances with IDS/IPS:** I discovered that hardware checksum offloading in hypervisors corrupts packets from Suricata's prespective. I learned how to troubleshoot this by disabling Hardware Cheksum Offloading in pfSense to allow proper deep packet inspection.
+* 
+
+## What can be improved
+
+
+## 🚀 How to run this Project
+
+
+
 *This project is for educational and demonstration purposes. It was prepared as part of engineering documentation validating practical skills in network engineering and cybersecurity.*
