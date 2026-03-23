@@ -52,6 +52,7 @@ In modern e-commerce, a Single Point of Failure (SPOF) at the network edge means
 
 ![Failover Wireshark Test](wireshark_failover_test.png)
 ![Failover Ping Test](icmp_failover_test.png)
+
 *> ICMP traffic dropping and recovering in ~3 seconds without breaking the session.*
 
 ### Test 2: Penetration Testing vs. IPS
@@ -59,10 +60,12 @@ In modern e-commerce, a Single Point of Failure (SPOF) at the network edge means
 * **Result:** Suricata successfully detected the scanning signatures ('ET SCAN Possible Nmap User-Agent Observed') and immediately dropped the attacker's IP at the network layer. The firewall entered Stealth Mode, returning zero information.
 
 ![Nmap Port Scan](nmap_port_scan.png)
+
 *> An attempt to map the edge network*
 
 ![Suricata Alerts](suricata_IPS_alert.png)
 ![Suricata Blok](suricata_IPS_block.png)
+
 *> Automatic IP block applied by Suricata IPS in response to the scan.*
 
 ## What I Learned
