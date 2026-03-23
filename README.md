@@ -9,7 +9,7 @@
 In modern e-commerce, a Single Point of Failure (SPOF) at the network edge means unacceptable downtime and financial loss. This project elmininates SPOF by implementing a fully redundant, High Availability cluster and a Zero Trust network architecture using strictly open-source solutions to achive enterprise-grade security.
 
 ![Network Topology](logical_topology.png)
-*> Logical topology of the designed enviroment.*
+</br>*> Logical topology of the designed enviroment.*
 
 ## 🛠️ Technologies
 * **Firewall & Routing:** pfSense
@@ -52,28 +52,28 @@ In modern e-commerce, a Single Point of Failure (SPOF) at the network edge means
 
 ![Failover Wireshark Test](wireshark_failover_test.png)
 ![Failover Ping Test](icmp_failover_test.png)
-
-*> ICMP traffic dropping and recovering in ~3 seconds without breaking the session.*
+</br>*> ICMP traffic dropping and recovering in ~3 seconds without breaking the session.*
 
 ### Test 2: Penetration Testing vs. IPS
-* **Scenario:** An aggressive SYN port scan ('nmap -sS -Pn) was launched from an external WAN machine to map the edge network.
+* **Scenario:** An aggressive SYN port scan ('nmap -sS -Pn') was launched from an external WAN machine to map the edge network.
 * **Result:** Suricata successfully detected the scanning signatures ('ET SCAN Possible Nmap User-Agent Observed') and immediately dropped the attacker's IP at the network layer. The firewall entered Stealth Mode, returning zero information.
 
 ![Nmap Port Scan](nmap_port_scan.png)
-
-*> An attempt to map the edge network*
+</br>*> An attempt to map the edge network*
 
 ![Suricata Alerts](suricata_IPS_alert.png)
 ![Suricata Blok](suricata_IPS_block.png)
-
-*> Automatic IP block applied by Suricata IPS in response to the scan.*
+</br>*> Automatic IP block applied by Suricata IPS in response to the scan.*
 
 ## What I Learned
 * **Virtualization Nuances with IDS/IPS:** I discovered that hardware checksum offloading in hypervisors corrupts packets from Suricata's prespective. I learned how to troubleshoot this by disabling Hardware Cheksum Offloading in pfSense to allow proper deep packet inspection.
+* **Inline IPS vs Legacy Mode:** I learned that 'virtio' network drivers used in virtualized environments require Suricata to run in Legacy Mode with a custom Pass List rather than Inline Mode to successfully drop malicious packets.
+* **Stateful High Availability:** Gained a deep, practical understanding of how CARP handles VIP elections and why replicating the State Table via a dedicated link is crucial for seamless user experience.
 * 
 
 ## What can be improved
-
+* **SIEM Integration:** Deploy a central SIEM solution to aggregate Syslog data and Suricata alerts into a single, actionable dashboard.
+* **Network Automation:** Automate the initial deployment of the pfSense cluster, VLANs and firewall rules using Ansible (Infrastructure as Code).
 
 ## 🚀 How to run this Project
 
