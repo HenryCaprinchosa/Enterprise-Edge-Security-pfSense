@@ -1,8 +1,8 @@
 # High Availability E-commerce Network Defense 🛡️
 
-![pfSense]([https://img.shields.io/badge/pfSense-Firewall-red](https://img.shields.io/badge/pfSense-Firewall-red?style=flat-square&logo=pfsense))
-![Suricata]([https://img.shields.io/badge/Security-Zero%20Trust-blue](https://img.shields.io/badge/Suricata-IPS-orange?style=flat-square))
-![OpenVPNG]([https://img.shields.io/badge/Lab-EVE--NG-green](https://img.shields.io/badge/OpenVPN-Secure_Access-blue?style=flat-square&logo=openvpn))
+![pfSense](https://img.shields.io/badge/pfSense-Firewall-red?style=flat-square&logo=pfsense)
+![Suricata](https://img.shields.io/badge/Suricata-IPS-orange?style=flat-square)
+![OpenVPNG](https://img.shields.io/badge/OpenVPN-Secure_Access-blue?style=flat-square&logo=openvpn)
 ![EVE-NG](https://img.shields.io/badge/EVE--NG-Network_Emulation-lightgrey?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-Done-green)
 
