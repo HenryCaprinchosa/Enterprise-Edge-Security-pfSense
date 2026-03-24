@@ -2,9 +2,9 @@
 
 ![pfSense](https://img.shields.io/badge/pfSense-Firewall-red?style=flat-square&logo=pfsense)
 ![Suricata](https://img.shields.io/badge/Suricata-IPS-orange?style=flat-square)
-![OpenVPNG](https://img.shields.io/badge/OpenVPN-Secure_Access-blue?style=flat-square&logo=openvpn)
+![OpenVPN](https://img.shields.io/badge/OpenVPN-Secure_Access-blue?style=flat-square&logo=openvpn)
 ![EVE-NG](https://img.shields.io/badge/EVE--NG-Network_Emulation-lightgrey?style=flat-square)
-![Status](https://img.shields.io/badge/Status-InProgress-orange?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Done-green?style=flat-square)
 
 In modern e-commerce, a Single Point of Failure (SPOF) at the network edge means unacceptable downtime and financial loss. This project elmininates SPOF by implementing a fully redundant, High Availability cluster and a Zero Trust network architecture using strictly open-source solutions to achive enterprise-grade security.
 
@@ -46,16 +46,16 @@ In modern e-commerce, a Single Point of Failure (SPOF) at the network edge means
 The creation of this environment was divided into four distinct engineering phases, progressing from theoretical design to deep technical implementation.
 
 ### Phase 1: Architectural Design & Threat Modeling
-Before booting up any virtual machines, I mapped out the business requirements. The primary goal was to protect an e-commerce edge against SPOF and external attacks. I designed a **Zero Trust** topology relying on **802.1Q VLANs** to strictly separate the WAM, DMZ, LAN and DB zones.
+Before booting up any virtual machines, I mapped out the business requirements. The primary goal was to protect an e-commerce edge against SPOF and external attacks. I designed a **Zero Trust** topology relying on **802.1Q VLANs** to strictly separate the WAN, DMZ, LAN and DB zones.
 
 ### Phase 2: EVE-NG Provisioning & Hypervisor Setup
 This project required a custom-built, hardware-emulated laboratory. After deploying the **EVE-NG** virtual machine on VMware Workstation Pro, I had to manually provision the operating systems for the nodes:
 * Established a secure connection to the EVE-NG underlying Linux environment using **WinSCP**.
 * Created custom virtual hard drives and transferred the '.iso' installation images (pfSense, Ubuntu Server, Ubuntu MATE) and the '.vmdk' virtual machine disk (Cisco L2 Switch) directly into the hypervisor.
-* Strictly adhered to EVE-NG's EQMU node naming conventions to ensure the emulator correctly recognized and booted the custom pfSense and Linux nodes.
+* Strictly adhered to EVE-NG's QEMU node naming conventions to ensure the emulator correctly recognized and booted the custom pfSense and Linux nodes.
 
 ### Phase 3: Network Infrastructure & High Availability
-With the nodes successfully booting, I build the core network:
+With the nodes successfully booting, I built the core network:
 1. **Layer 2 Segmentation:** Configured Cisco vIOS switches with 802.1Q trunking to distribute VLANs across the environment.
 2. **Cluster Initialization:** Deployed two pfSense firewalls, Master and Backup.
 3. **Redundancy:** Created a Virtual IP using the **CARP** protocol ont the WAN and LAN interfaces. To achieve stateful failover, I established a dedicated, physically untagged network link between the firewalls. I configured XMLRPC and **pfsync** over this link to replicate the State Table in real-time.
@@ -64,7 +64,7 @@ With the nodes successfully booting, I build the core network:
 The final phase focused on turning the edge routers into an enterprise-grade security perimeter:
 * **Access Control:** Implemented a strict *Default Deny* firewall policy, utilizing Role-Based Access Control to premit only essential traffic between specific VLANs.
 * **Intrusion Prevention:** Deployed Suricata IPS on the WAN edge. To make it work in a virtualized 'virtio' environment, I disabled Hardware Checksum Offloading and configurated Suricata in *Legacy Mode* with a custom Pass List.
-* **Threat Intelligence:** Configured **pfBlockerNG* for Geo-blocking to instantly drop traffic from high-risk regions.
+* **Threat Intelligence:** Configured **pfBlockerNG** for Geo-blocking to instantly drop traffic from high-risk regions.
 * **Secure Management:** Set up an **OpenVPN** server with Public Key Infrastructure to ensure the firewalls could only be administrated via a secure, encrypted tunnel.
 
 ## 📊 Proof of Concept / Testing
