@@ -128,7 +128,7 @@ Once all images are uploaded, open the EVE-NG CLI and run the fix premissions co
 ```
 ### Step 3: Importing the Topology
 1. Open your web browser and navigate to the EVE-NG IP address (Credentials: admin/eve).
-2. Download the *Enterprise_Edge_Security_Topology.unl* file from this GitHub repository.
+2. Download the *Ecommerce_pfSense_HA.unl* file from this GitHub repository.
 3. In the EVE-NG WebGUI, click the **Import** button and upload the *.unl* file.
 4. Open the imported lab. You should now see the complete visual topology.
 
