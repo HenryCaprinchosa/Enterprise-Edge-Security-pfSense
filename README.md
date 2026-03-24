@@ -139,7 +139,8 @@ Once all images are uploaded, open the EVE-NG CLI and run the fix premissions co
 4. Open a web browser on the Admin PC and navigate to the pfSense WebGUI:
   * **Master pfSense:** https://192.168.10.2
   * **Backup pfSense:** https://192.168.10.3
-5. Go to **Diagnostics -> Backup & Restore** and upload the respective *pfsense_master_config.xml* and *pfsense_backup_config.xml* files. The firewalls will reboot.
+  * **ROUTER-ISP:** https://100.10.10.1
+5. Go to **Diagnostics -> Backup & Restore** and upload the respective *pfsense_master_config.xml*, *pfsense_backup_config.xml* and *pfsense_router_isp_config.xml* files. The firewalls will reboot.
 
 *If you encounter any issues reproducing this lab, feel free to open an Issue in this repository!*
 
