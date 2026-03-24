@@ -6,10 +6,10 @@
 ![EVE-NG](https://img.shields.io/badge/EVE--NG-Network_Emulation-lightgrey?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-Done-green?style=flat-square)
 
-In modern e-commerce, a Single Point of Failure (SPOF) at the network edge means unacceptable downtime and financial loss. This project elmininates SPOF by implementing a fully redundant, High Availability cluster and a Zero Trust network architecture using strictly open-source solutions to achive enterprise-grade security.
+In modern e-commerce, a Single Point of Failure (SPOF) at the network edge means unacceptable downtime and financial loss. This project eliminates SPOF by implementing a fully redundant, High Availability cluster and a Zero Trust network architecture using strictly open-source solutions to achieve enterprise-grade security.
 
 ![Network Topology](logical_topology.png)
-</br>*> Logical topology of the designed enviroment.*
+</br>*> Logical topology of the designed environment.*
 
 ## 🛠️ Technologies
 * **Firewall & Routing:** pfSense
@@ -39,8 +39,8 @@ In modern e-commerce, a Single Point of Failure (SPOF) at the network edge means
 * Deployment of an **OpenVPN** server using strong cryptography (AES-256-GCM).
 * Certificate-based user authentication (Public Key Infrastructure - PKI).
 
-### 5. Cost Efficency
-* Enterprise-level edge protection achieved without expensive proprietaty licensing.
+### 5. Cost Efficiency
+* Enterprise-level edge protection achieved without expensive proprietary licensing.
 
 ## ⚙️ The Process
 The creation of this environment was divided into four distinct engineering phases, progressing from theoretical design to deep technical implementation.
@@ -71,7 +71,7 @@ The final phase focused on turning the edge routers into an enterprise-grade sec
 
 ### Test 1: Failover Test
 * **Scenario:** Simulated a sudden hardware failure of the Master pfSense node during active traffic.
-* **Result:** The Backup node successfully detected the missing CARP heartbeats and assumed the Master role. The failover occured in ~3 seconds, and thanks to 'pfsync' state replication, active TCP sessions were not dropped.
+* **Result:** The Backup node successfully detected the missing CARP heartbeats and assumed the Master role. The failover occurred in ~3 seconds, and thanks to 'pfsync' state replication, active TCP sessions were not dropped.
 
 ![Failover Wireshark Test](wireshark_failover_test.png)
 ![Failover Ping Test](icmp_failover_test.png)
@@ -89,14 +89,14 @@ The final phase focused on turning the edge routers into an enterprise-grade sec
 </br>*> Automatic IP block applied by Suricata IPS in response to the scan.*
 
 ## 💡 What I Learned
-* **Virtualization Nuances with IDS/IPS:** I discovered that hardware checksum offloading in hypervisors corrupts packets from Suricata's prespective. I learned how to troubleshoot this by disabling Hardware Cheksum Offloading in pfSense to allow proper deep packet inspection.
+* **Virtualization Nuances with IDS/IPS:** I discovered that hardware checksum offloading in hypervisors corrupts packets from Suricata's perspective. I learned how to troubleshoot this by disabling Hardware Checksum Offloading in pfSense to allow proper deep packet inspection.
 * **Inline IPS vs Legacy Mode:** I learned that 'virtio' network drivers used in virtualized environments require Suricata to run in Legacy Mode with a custom Pass List rather than Inline Mode to successfully drop malicious packets.
 * **Stateful High Availability:** Gained a deep, practical understanding of how CARP handles VIP elections and why replicating the State Table via a dedicated link is crucial for seamless user experience.
-* **Perimeter Threat Intelligence:** Discovered the computational efficency of using pfBlockerNG. I learned that dropping known malicious IPs and entire high-risk countries directly at the edge drastically reduces the processing load on the Deep Packet Inspection engine.
+* **Perimeter Threat Intelligence:** Discovered the computational efficiency of using pfBlockerNG. I learned that dropping known malicious IPs and entire high-risk countries directly at the edge drastically reduces the processing load on the Deep Packet Inspection engine.
 * **Secure Remote Access:** Transitioned from theory to practice regarding Public Key Infrastructure. I learned how to properly configure an OpenVPN server utilizing strong cryptography and certificate-based authentication, proving that administrative interfaces should never be directly exposed to the Internet.
 
 ## 🚀 Future Enhancements & Scalability
-* **Hardware Scalability:** While this project was modeled in a virtual environment, the architecture is fully hardware-agnostic. Depending on the enterprise size and network throuhput requirements, this pfSense cluster can be seamlessly scaled by deploying it on dedicated, high-performance Netgate applances or custom bare-metal servers equipped with specialized NICs.
+* **Hardware Scalability:** While this project was modeled in a virtual environment, the architecture is fully hardware-agnostic. Depending on the enterprise size and network throughput requirements, this pfSense cluster can be seamlessly scaled by deploying it on dedicated, high-performance Netgate appliances or custom bare-metal servers equipped with specialized NICs.
 * **SIEM Integration:** Deploy a central SIEM solution to aggregate Syslog data and Suricata alerts into a single, actionable dashboard.
 * **Network Automation:** Automate the initial deployment of the pfSense cluster, VLANs and firewall rules using Ansible (Infrastructure as Code).
 
