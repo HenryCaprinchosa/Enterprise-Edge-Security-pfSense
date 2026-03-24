@@ -105,14 +105,14 @@ This guide provides a step-by-step walkthrough to deploy and test this High Avai
 
 ### Step 1: Prerequisites & Hypervisor Setup
 To run this lab, you will need a machine with at least 16GB of RAM and a CPU supporting virtualization (Intel VT-x/AMD-V).
-1. Download and install **VMware Workstaion Pro** (or VMware Workstation Player).
-2. Download the **EVE-NG Community Edition** OVF/OVA file aswel as **Windows Integration Pack** from the [official EVE-NG website](https://www.eve-ng.net/).
+1. Download and install **VMware Workstation Pro** (or VMware Workstation Player).
+2. Download the **EVE-NG Community Edition** OVF/OVA file as well as **Windows Integration Pack** from the [official EVE-NG website](https://www.eve-ng.net/).
 3. Import the EVE-NG OVA into VMware.
-4. **CRITICAL:** Before powering on the VM, go to the VM settings -> Processors and check the box: 'Virtualize Intel VT-x/EPT or AMD-V/RVI'. This enables nested virtualzation.
+4. **CRITICAL:** Before powering on the VM, go to the VM settings -> Processors and check the box: 'Virtualize Intel VT-x/EPT or AMD-V/RVI'. This enables nested virtualization.
 5. Power on the EVE-NG VM. Note the IP address displayed on the CLI screen (e.g., 'http://192.168.x.x').
 
 ### Step 2: Uploading Node Images
-EVE-NG requires specific node images to run the firewalls, switches and clients. Use na FTP/SCP client like **WinSCP** or **FileZilla** to connect to your EVE-NG VM (Credentials: 'root' / 'eve').
+EVE-NG requires specific node images to run the firewalls, switches and clients. Use an FTP/SCP client like **WinSCP** or **FileZilla** to connect to your EVE-NG VM (Credentials: 'root' / 'eve').
 
 You must upload the corresponding '.qcow2' image files into the following exact directories in '/opt/unetlab/addons/qemu/':
 * **pfSense:** 'pfsense-2.7.2/' 
@@ -122,7 +122,7 @@ You must upload the corresponding '.qcow2' image files into the following exact 
 
 *Note: Due to licensing, I cannot provide the OS image files in this repository. You must obtain them from their respective vendors.*
 
-Once all images are uploaded, open the EVE-NG CLI and run the fix premissions command. **Do not skip this step:**
+Once all images are uploaded, open the EVE-NG CLI and run the fix permissions command. **Do not skip this step:**
 ```bash
 /opt/unetlab/wrappers/unl_wrapper -a fixpermissions
 ```
