@@ -51,7 +51,7 @@ Before booting up any virtual machines, I mapped out the business requirements. 
 ### Phase 2: EVE-NG Provisioning & Hypervisor Setup
 This project required a custom-built, hardware-emulated laboratory. After deploying the **EVE-NG** virtual machine on VMware Workstation Pro, I had to manually provision the operating systems for the nodes:
 * Established a secure connection to the EVE-NG underlying Linux environment using **WinSCP**.
-* Created custom virtual hard drives and transferred the '.iso' installation images (pfSense, Ubuntu Server, Ubuntu MATE) and the '.vmdk' virtual machine disk (Cisco L2 Switch) directly into the hypervisor.
+* Created custom virtual hard drives and transferred the `.iso` installation images (pfSense, Ubuntu Server, Ubuntu MATE) and the `.vmdk` virtual machine disk (Cisco L2 Switch) directly into the hypervisor.
 * Strictly adhered to EVE-NG's QEMU node naming conventions to ensure the emulator correctly recognized and booted the custom pfSense and Linux nodes.
 
 ### Phase 3: Network Infrastructure & High Availability
@@ -63,7 +63,7 @@ With the nodes successfully booting, I built the core network:
 ### Phase 4: Security Hardening & Zero Trust Implementation
 The final phase focused on turning the edge routers into an enterprise-grade security perimeter:
 * **Access Control:** Implemented a strict *Default Deny* firewall policy, utilizing Role-Based Access Control to premit only essential traffic between specific VLANs.
-* **Intrusion Prevention:** Deployed Suricata IPS on the WAN edge. To make it work in a virtualized 'virtio' environment, I disabled Hardware Checksum Offloading and configurated Suricata in *Legacy Mode* with a custom Pass List.
+* **Intrusion Prevention:** Deployed Suricata IPS on the WAN edge. To make it work in a virtualized `virtio` environment, I disabled Hardware Checksum Offloading and configurated Suricata in *Legacy Mode* with a custom Pass List.
 * **Threat Intelligence:** Configured **pfBlockerNG** for Geo-blocking to instantly drop traffic from high-risk regions.
 * **Secure Management:** Set up an **OpenVPN** server with Public Key Infrastructure to ensure the firewalls could only be administrated via a secure, encrypted tunnel.
 
@@ -71,15 +71,15 @@ The final phase focused on turning the edge routers into an enterprise-grade sec
 
 ### Test 1: Failover Test
 * **Scenario:** Simulated a sudden hardware failure of the Master pfSense node during active traffic.
-* **Result:** The Backup node successfully detected the missing CARP heartbeats and assumed the Master role. The failover occurred in ~3 seconds, and thanks to 'pfsync' state replication, active TCP sessions were not dropped.
+* **Result:** The Backup node successfully detected the missing CARP heartbeats and assumed the Master role. The failover occurred in ~3 seconds, and thanks to `pfsync` state replication, active TCP sessions were not dropped.
 
 ![Failover Wireshark Test](wireshark_failover_test.png)
 ![Failover Ping Test](icmp_failover_test.png)
 </br>*> ICMP traffic dropping and recovering in ~3 seconds without breaking the session.*
 
 ### Test 2: Penetration Testing vs. IPS
-* **Scenario:** An aggressive SYN port scan ('nmap -sS -Pn') was launched from an external WAN machine to map the edge network.
-* **Result:** Suricata successfully detected the scanning signatures ('ET SCAN Possible Nmap User-Agent Observed') and immediately dropped the attacker's IP at the network layer. The firewall entered Stealth Mode, returning zero information.
+* **Scenario:** An aggressive SYN port scan (`nmap -sS -Pn`) was launched from an external WAN machine to map the edge network.
+* **Result:** Suricata successfully detected the scanning signatures (`ET SCAN Possible Nmap User-Agent Observed`) and immediately dropped the attacker's IP at the network layer. The firewall entered Stealth Mode, returning zero information.
 
 ![Nmap Port Scan](nmap_port_scan.png)
 </br>*> An attempt to map the edge network*
@@ -90,7 +90,7 @@ The final phase focused on turning the edge routers into an enterprise-grade sec
 
 ## 💡 What I Learned
 * **Virtualization Nuances with IDS/IPS:** I discovered that hardware checksum offloading in hypervisors corrupts packets from Suricata's perspective. I learned how to troubleshoot this by disabling Hardware Checksum Offloading in pfSense to allow proper deep packet inspection.
-* **Inline IPS vs Legacy Mode:** I learned that 'virtio' network drivers used in virtualized environments require Suricata to run in Legacy Mode with a custom Pass List rather than Inline Mode to successfully drop malicious packets.
+* **Inline IPS vs Legacy Mode:** I learned that `virtio` network drivers used in virtualized environments require Suricata to run in Legacy Mode with a custom Pass List rather than Inline Mode to successfully drop malicious packets.
 * **Stateful High Availability:** Gained a deep, practical understanding of how CARP handles VIP elections and why replicating the State Table via a dedicated link is crucial for seamless user experience.
 * **Perimeter Threat Intelligence:** Discovered the computational efficiency of using pfBlockerNG. I learned that dropping known malicious IPs and entire high-risk countries directly at the edge drastically reduces the processing load on the Deep Packet Inspection engine.
 * **Secure Remote Access:** Transitioned from theory to practice regarding Public Key Infrastructure. I learned how to properly configure an OpenVPN server utilizing strong cryptography and certificate-based authentication, proving that administrative interfaces should never be directly exposed to the Internet.
@@ -108,17 +108,17 @@ To run this lab, you will need a machine with at least 16GB of RAM and a CPU sup
 1. Download and install **VMware Workstation Pro** (or VMware Workstation Player).
 2. Download the **EVE-NG Community Edition** OVF/OVA file as well as **Windows Integration Pack** from the [official EVE-NG website](https://www.eve-ng.net/).
 3. Import the EVE-NG OVA into VMware.
-4. **CRITICAL:** Before powering on the VM, go to the VM settings -> Processors and check the box: 'Virtualize Intel VT-x/EPT or AMD-V/RVI'. This enables nested virtualization.
-5. Power on the EVE-NG VM. Note the IP address displayed on the CLI screen (e.g., 'http://192.168.x.x').
+4. **CRITICAL:** Before powering on the VM, go to the VM settings -> Processors and check the box: `Virtualize Intel VT-x/EPT or AMD-V/RVI`. This enables nested virtualization.
+5. Power on the EVE-NG VM. Note the IP address displayed on the CLI screen (`e.g., 'http://192.168.x.x`).
 
 ### Step 2: Uploading Node Images
-EVE-NG requires specific node images to run the firewalls, switches and clients. Use an FTP/SCP client like **WinSCP** or **FileZilla** to connect to your EVE-NG VM (Credentials: 'root' / 'eve').
+EVE-NG requires specific node images to run the firewalls, switches and clients. Use an FTP/SCP client like **WinSCP** or **FileZilla** to connect to your EVE-NG VM (Credentials: `root` / `eve`).
 
-You must upload the corresponding '.qcow2' image files into the following exact directories in '/opt/unetlab/addons/qemu/':
-* **pfSense:** 'pfsense-2.7.2/' 
-* **Cisco vIOS L2:** 'viosl2-adventerprisek9-m/'
-* **Ubuntu Server:** 'linux-ubuntu-server/' 
-* **Ubuntu MATE:** 'linux-ubuntu-mate/' 
+You must upload the corresponding `.qcow2` image files into the following exact directories in `/opt/unetlab/addons/qemu/`:
+* **pfSense:** `pfsense-2.7.2/`
+* **Cisco vIOS L2:** `viosl2-adventerprisek9-m/`
+* **Ubuntu Server:** `linux-ubuntu-server/`
+* **Ubuntu MATE:** `linux-ubuntu-mate/`
 
 *Note: Due to licensing, I cannot provide the OS image files in this repository. You must obtain them from their respective vendors.*
 
@@ -127,20 +127,20 @@ Once all images are uploaded, open the EVE-NG CLI and run the fix permissions co
 /opt/unetlab/wrappers/unl_wrapper -a fixpermissions
 ```
 ### Step 3: Importing the Topology
-1. Open your web browser and navigate to the EVE-NG IP address (Credentials: admin/eve).
-2. Download the *Ecommerce_pfSense_HA.unl* file from this GitHub repository.
-3. In the EVE-NG WebGUI, click the **Import** button and upload the *.unl* file.
+1. Open your web browser and navigate to the EVE-NG IP address (Credentials: `admin` / `eve`).
+2. Download the `Ecommerce_pfSense_HA.unl` file from this GitHub repository.
+3. In the EVE-NG WebGUI, click the `Import` button and upload the `.unl` file.
 4. Open the imported lab. You should now see the complete visual topology.
 
 ### Step 4: Testing the Environment
-1. Right-click on the nodes and select **Start** to boot up the environment.
-2. The pfSense firewalls need their configurations. I have provided the XML backup files in the *configs/* folder of this repository.
-3. Open the console of the *Admin PC* inside EVE-NG.
+1. Right-click on the nodes and select `Start` to boot up the environment.
+2. The pfSense firewalls need their configurations. I have provided the XML backup files in the `configs/` folder of this repository.
+3. Open the console of the `Admin PC` inside EVE-NG.
 4. Open a web browser on the Admin PC and navigate to the pfSense WebGUI:
-  * **Master pfSense:** https://192.168.10.2
-  * **Backup pfSense:** https://192.168.10.3
-  * **ROUTER-ISP:** https://100.10.10.1
-5. Go to **Diagnostics -> Backup & Restore** and upload the respective *pfsense_master_config.xml*, *pfsense_backup_config.xml* and *pfsense_router_isp_config.xml* files. The firewalls will reboot.
+  * **Master pfSense:** `https://192.168.10.2`
+  * **Backup pfSense:** `https://192.168.10.3`
+  * **ROUTER-ISP:** `https://100.10.10.1`
+5. Go to `Diagnostics -> Backup & Restore` and upload the respective `pfsense_master_config.xml`, `pfsense_backup_config.xml` and `pfsense_router_isp_config.xml` files. The firewalls will reboot.
 
 *If you encounter any issues reproducing this lab, feel free to open an Issue in this repository!*
 
